@@ -39,8 +39,8 @@ export const deleteRecipe = (recipeId: number) => (dispatch: ThunkDispatch) => {
     });
 };
 
-export const createRecipe = (title: string) => (dispatch: ThunkDispatch) => {
-  recipesAPI.createRecipe(title)
+export const createRecipe = (title: string, description: string) => (dispatch: ThunkDispatch) => {
+  recipesAPI.createRecipe(title, description)
     .then((res) => {
       dispatch(addRecipe(res));
     });

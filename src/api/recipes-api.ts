@@ -27,6 +27,28 @@ export const recipesAPI = {
         title: 'accusamus beatae ad facilis cum similique qui sunt',
         url: 'https://via.placeholder.com/600/92c952',
       },
+       {
+        albumId: 1,
+        id: 3,
+        thumbnailUrl: 'https://via.placeholder.com/150/92c952',
+        title: 'accusamus beatae ad facilis cum similique qui sunt',
+        url: 'https://via.placeholder.com/600/92c952',
+      },
+       {
+        albumId: 1,
+        id: 4,
+        thumbnailUrl: 'https://via.placeholder.com/150/92c952',
+        title: 'accusamus beatae ad facilis cum similique qui sunt',
+        url: 'https://via.placeholder.com/600/92c952',
+      },
+       {
+        albumId: 1,
+        id: 5,
+        thumbnailUrl: 'https://via.placeholder.com/150/92c952',
+        title: 'accusamus beatae ad facilis cum similique qui sunt',
+        url: 'https://via.placeholder.com/600/92c952',
+      },
+
     ])
       ;
   },
@@ -34,13 +56,13 @@ export const recipesAPI = {
     // return instance.delete<ResponseType>(`albums/1/photos/${id}`);
     return Promise.resolve({});
   },
-  createRecipe(title: string) {
+  createRecipe(title: string, description: string) {
     // return instance.post('albums/1/photos', { title });
     return Promise.resolve({
         albumId: 1,
         id: Math.random() * 10,
-        thumbnailUrl: 'https://via.placeholder.com/150/92c952',
-        title: 'accusamus beatae ad facilis cum similique qui sunt',
+        thumbnailUrl: description,
+        title,
         url: 'https://via.placeholder.com/600/92c952',
       });
   },

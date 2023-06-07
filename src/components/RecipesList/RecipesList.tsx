@@ -1,38 +1,52 @@
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
+import IconButton from '@mui/material/IconButton';
 import React, { useEffect } from 'react';
 import { RecipeType } from '../../api/recipes-api';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { Recipe } from './Recipe/Recipe';
-import { fetchRecipes, deleteRecipe, createRecipe } from './recipes-reducer';
+import { fetchRecipes } from './recipes-reducer';
+import { AddBox } from '@mui/icons-material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { Link } from 'react-router-dom';
 
 export const RecipesList: React.FC = () => {
   const recipes = useAppSelector<RecipeType[]>(state => state.recipes);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const thunk = fetchRecipes();
-    dispatch(thunk);
+    const data = fetchRecipes();
+    dispatch(data);
   }, []);
-
-
-  const removeRecipe = (id: number) => {
-    dispatch(deleteRecipe(id));
-  };
-
-  const addRecipe = (title: string) => {
-    dispatch(createRecipe(title))
-  }
 
   return (
     <Grid container spacing={3}>
       {
         recipes.map(el => <Grid item key={el.id}>
           <Paper style={{ padding: '10px' }}>
-            <Recipe recipe={el} removeRecipe={removeRecipe} addRecipe={addRecipe}  />
+            <Recipe recipe={el} />
           </Paper>
         </Grid>)
       }
+      <Grid />
+      <Card sx={{
+        width: 345,
+        maxWidth: 345,
+        height: 350,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <CardContent>
+          <Link to='/create'>
+            <IconButton color='primary'>
+              <AddBox />
+            </IconButton>
+          </Link>
+        </CardContent>
+      </Card>
     </Grid>
   );
 };
