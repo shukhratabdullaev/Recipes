@@ -49,7 +49,7 @@ export const Recipe: React.FC<PropsType> = React.memo(({ recipe }) => {
           </Typography>
         </CardContent>
         <CardActions sx={{ justifyContent: 'space-between' }}>
-          <Button component={Link} to={`/details:${recipe.id}`} size='medium'>Learn More</Button>
+          <Button component={Link} to={`/details/${recipe.id}`} size='medium'>Learn More</Button>
           <Button size='medium' onClick={() => setEditableMode(true)}>edit</Button>
           <Button size='medium' onClick={removeRecipe}>Delete</Button>
         </CardActions>

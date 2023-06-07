@@ -1,11 +1,10 @@
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
 import IconButton from '@mui/material/IconButton';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { RecipeType } from '../../api/recipes-api';
-import { useAppDispatch, useAppSelector } from '../../app/store';
+import { useAppSelector } from '../../app/store';
 import { Recipe } from './Recipe/Recipe';
-import { fetchRecipes } from './recipes-reducer';
 import { AddBox } from '@mui/icons-material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -13,12 +12,6 @@ import { Link } from 'react-router-dom';
 
 export const RecipesList: React.FC = () => {
   const recipes = useAppSelector<RecipeType[]>(state => state.recipes);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const data = fetchRecipes();
-    dispatch(data);
-  }, []);
 
   return (
     <Grid container spacing={3}>
