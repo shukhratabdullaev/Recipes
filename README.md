@@ -1,46 +1,19 @@
-# Getting Started with Create React App
+Вам нужно разработать веб-приложение для создания и хранения рецептов блюд. Приложение должно предоставлять пользователям возможность создавать, редактировать, просматривать и удалять рецепты. Каждый рецепт должен иметь название, описание, список ингредиентов, изображение и время приготовления.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Технологии, которые нужно использовать:
 
-## Available Scripts
+- React или Next.js или Vue или Nuxt.js
+- Redux или Vuex/Pinia
+- TypeScript
+- Любой CSS фреймворк
 
-In the project directory, you can run:
+Дополнительные требования:
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. В приложении должно быть минимум три страницы: главная страница со списком рецептов, страница с подробным описанием рецепта и страница редактирования/создания нового рецепта.
+2. Для управления состоянием приложения необходимо использовать Redux или Vuex.
+3. Для более строгой типизации кода необходимо использовать TypeScript.
+4. Для визуального оформления приложения необходимо использовать любой CSS фреймворк (например, Bootstrap, Tailwind CSS, Material UI и т.д.).
+5. Для обращения к бэкенду (например [https://jsonplaceholder.typicode.com/guide](https://jsonplaceholder.typicode.com/guide) либо можете использовать любой другой, либо написать бэкенд самому на node.js) необходимо использовать REST API.
+6. Дополнительно, можно добавить функционал поиска и сортировки рецептов, а также функционал добавления комментариев к рецептам.
+7. Код должен быть написан в соответствии с принципами чистого кода.
+8. Приложение должно быть выложено на GitHub и задеплоино на GitHub Pages, Netlify, Heroku или любой другой хостинг.
