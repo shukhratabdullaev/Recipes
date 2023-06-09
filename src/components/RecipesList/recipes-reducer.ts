@@ -13,6 +13,18 @@ export const recipesReducer = (state: RecipeType[] = initialState, action: Actio
       return state.filter(recipe => recipe.id !== action.id);
     case 'ADD-RECIPE':
       return [...state, { ...action.recipe }];
+    case 'UPDATE-RECIPE':
+      return state.map(el => {
+        if (el.id === action.id) {
+          return {
+            ...el,
+            title: action.title,
+            url: action.url,
+            description: action.description,
+          };
+        }
+        return el;
+      });
     default:
       return state;
   }
@@ -22,6 +34,13 @@ export const recipesReducer = (state: RecipeType[] = initialState, action: Actio
 export const setRecipes = (recipes: RecipeType[]) => ({ type: 'SET-RECIPES', recipes } as const);
 export const removeRecipe = (id: number) => ({ type: 'REMOVE-RECIPE', id } as const);
 export const addRecipe = (recipe: RecipeType) => ({ type: 'ADD-RECIPE', recipe } as const);
+export const updateRecipe = (id: number, title: string, url: string, description: string) => ({
+  type: 'UPDATE-RECIPE',
+  id,
+  title,
+  url,
+  description,
+} as const);
 
 
 // thunks
@@ -39,10 +58,17 @@ export const deleteRecipe = (recipeId: number) => (dispatch: ThunkDispatch) => {
     });
 };
 
-export const createRecipe = (title: string, description: string) => (dispatch: ThunkDispatch) => {
-  recipesAPI.createRecipe(title, description)
+export const createRecipe = (title: string, url: string, description: string) => (dispatch: ThunkDispatch) => {
+  recipesAPI.createRecipe(title, url, description)
     .then((res) => {
       dispatch(addRecipe(res));
+    });
+};
+
+export const editRecipe = (id: number, title: string, url: string, description: string) => (dispatch: ThunkDispatch) => {
+  recipesAPI.updateRecipe(id, title, url, description)
+    .then(res => {
+      dispatch(updateRecipe(id, title, url, description));
     });
 };
 
@@ -50,14 +76,13 @@ export const createRecipe = (title: string, description: string) => (dispatch: T
 export type SetRecipesType = ReturnType<typeof setRecipes>;
 export type DeleteRecipeType = ReturnType<typeof removeRecipe>;
 export type AddRecipeType = ReturnType<typeof addRecipe>;
+export type UpdateRecipeType = ReturnType<typeof updateRecipe>;
 
 type ActionsType =
   | SetRecipesType
   | DeleteRecipeType
   | AddRecipeType
-// | ReturnType<typeof changeTodolistTitleAC>
-// | ReturnType<typeof changeTodolistFilterAC>
-// | ReturnType<typeof changeTodolistEntityStatusAC>
+  | UpdateRecipeType
 
 
 type ThunkDispatch = Dispatch<ActionsType>

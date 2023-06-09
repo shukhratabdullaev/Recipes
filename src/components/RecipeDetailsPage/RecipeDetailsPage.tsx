@@ -1,7 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/store';
 import Typography from '@mui/material/Typography/Typography';
 import React from 'react';
+import Box from '@mui/material/Box/Box';
+import Button from '@mui/material/Button/Button';
 
 export const RecipeDetailsPage = () => {
   const { recipeId } = useParams();
@@ -12,10 +14,20 @@ export const RecipeDetailsPage = () => {
 
   if (recipe) {
     return (
-      <div>
-        <Typography>
-          {recipe.title}
-        </Typography>
+      <div style={{textAlign: 'center'}}>
+        <Typography variant='h1'>{recipe.title}</Typography>
+        <Box
+          component="img"
+          sx={{
+            height: 500,
+            width: 700,
+            padding: '16px 0'
+          }}
+          alt={recipe.title}
+          src={recipe.url}
+        />
+        <Typography variant='h5'>{recipe.description}</Typography>
+        <Button size='large' component={Link} to={`/edit/${recipe.id}`}>edit</Button>
       </div>
     );
   }

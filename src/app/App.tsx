@@ -9,6 +9,7 @@ import { RecipeDetailsPage } from '../components/RecipeDetailsPage/RecipeDetails
 import { CreateRecipePage } from '../components/CreateRecipePage/CreateRecipePage';
 import { useAppDispatch } from './store';
 import { fetchRecipes } from '../components/RecipesList/recipes-reducer';
+import { SearchAppBar } from '../utils/SearchAppBar';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -19,22 +20,14 @@ const App = () => {
   }, []);
 
   return <div className='App'>
-    <AppBar position='static'>
-      <Container>
-        <Toolbar>
-          <Link to='/' style={{ textDecoration: 'none' }}>
-            <Typography variant='h6' color='white'>Recipes</Typography>
-          </Link>
-        </Toolbar>
-      </Container>
-    </AppBar>
+    <SearchAppBar/>
     <Container fixed>
       <Routes>
         <Route path='/' element={<RecipesList />} />
         <Route path='/details/:recipeId' element={<RecipeDetailsPage />} />
         <Route path='/create' element={<CreateRecipePage />} />
-        <Route path='/edit' element={<CreateRecipePage />} />
-        {/* <Route path='*' element={<h1>Not Fount 404</h1>} /> */}
+        <Route path='/edit/:recipeId' element={<CreateRecipePage />} />
+         <Route path='*' element={<h1>Not Fount 404</h1>} />
       </Routes>
     </Container>
   </div>;
