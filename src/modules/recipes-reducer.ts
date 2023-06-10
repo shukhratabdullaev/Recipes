@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { recipesAPI, RecipeType } from '../../api/recipes-api';
+import { recipesAPI, RecipeType } from 'api/recipes-api';
 
 
 const initialState: RecipeType[] = [];
@@ -8,11 +8,11 @@ const initialState: RecipeType[] = [];
 export const recipesReducer = (state: RecipeType[] = initialState, action: ActionsType): RecipeType[] => {
   switch (action.type) {
     case 'SET-RECIPES':
-      return action.recipes.map(recipe => ({ ...recipe }));
+      return action.recipes;
     case 'REMOVE-RECIPE':
       return state.filter(recipe => recipe.id !== action.id);
     case 'ADD-RECIPE':
-      return [...state, { ...action.recipe }];
+      return [...state, action.recipe];
     case 'UPDATE-RECIPE':
       return state.map(el => {
         if (el.id === action.id) {
@@ -20,7 +20,7 @@ export const recipesReducer = (state: RecipeType[] = initialState, action: Actio
             ...el,
             title: action.title,
             url: action.url,
-            description: action.description,
+            description: action.description
           };
         }
         return el;
@@ -39,7 +39,7 @@ export const updateRecipe = (id: number, title: string, url: string, description
   id,
   title,
   url,
-  description,
+  description
 } as const);
 
 

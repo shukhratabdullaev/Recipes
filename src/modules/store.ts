@@ -1,5 +1,5 @@
 import { AnyAction, applyMiddleware, combineReducers, legacy_createStore } from 'redux';
-import { recipesReducer } from '../components/RecipesList/recipes-reducer';
+import { recipesReducer } from './recipes-reducer';
 import thunkMiddleware, { ThunkDispatch } from 'redux-thunk';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 

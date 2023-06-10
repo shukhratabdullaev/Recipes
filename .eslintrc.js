@@ -4,7 +4,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    node: true,
+    node: true
   },
   extends: [
     'airbnb',
@@ -14,7 +14,7 @@ module.exports = {
     'plugin:import/typescript',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/eslint-recommended'
   ],
   parserOptions: {
     project: './tsconfig.json',
@@ -24,10 +24,12 @@ module.exports = {
       js: true,
       jsx: true,
       ts: true,
-      tsx: true,
-    },
+      tsx: true
+    }
   },
   rules: {
+    'react-in-jsx-scope': 0,
+    'default-param-last': 0,
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-use-before-define': ['error'],
     '@typescript-eslint/no-shadow': 'off',
@@ -35,21 +37,21 @@ module.exports = {
       'error',
       {
         multiline: true,
-        consistent: true,
-      },
+        consistent: true
+      }
     ],
     'no-use-before-define': 0,
     'react/jsx-filename-extension': [
       1,
       {
-        extensions: ['.js', '.jsx', '.tsx', '.ts'],
-      },
+        extensions: ['.js', '.jsx', '.tsx', '.ts']
+      }
     ],
     'max-len': [
       'error',
       {
-        code: 400,
-      },
+        code: 400
+      }
     ],
     'react/prop-types': 0,
     'import/extensions': 0,
@@ -63,13 +65,16 @@ module.exports = {
     'import/no-mutable-exports': 0,
     'max-classes-per-file': 0,
     // 'linebreak-style': 'off',
-    'react/function-component-definition': [2, { namedComponents: 'arrow-function', unnamedComponents: 'arrow-function' }],
+    'react/function-component-definition': [2, {
+      namedComponents: 'arrow-function',
+      unnamedComponents: 'arrow-function'
+    }],
     'import/order': 0,
-    'react/no-unknown-property': 1,
+    'react/no-unknown-property': 1
   },
   settings: {
     react: {
-      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
-    },
-  },
+      version: 'detect' // Tells eslint-plugin-react to automatically detect the version of React to use
+    }
+  }
 };

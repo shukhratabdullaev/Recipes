@@ -1,15 +1,15 @@
-import { useAppDispatch, useAppSelector } from '../../app/store';
-import { createRecipe, editRecipe } from '../RecipesList/recipes-reducer';
+import { useAppDispatch, useAppSelector } from 'modules/store';
+import { createRecipe, editRecipe } from 'modules/recipes-reducer';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Button from '@mui/material/Button/Button';
 import TextField from '@mui/material/TextField/TextField';
-import { RecipeType } from '../../api/recipes-api';
+import { RecipeType } from 'api/recipes-api';
 import Textarea from '@mui/joy/Textarea/Textarea';
 
 type InitialRecipeType = Omit<RecipeType, 'id'>
 
-export const CreateRecipePage = () => {
+export const RecipeForm = () => {
   const [recipe, setRecipe] = useState<InitialRecipeType | RecipeType>({title: '', url: '', description: ''});
   const [error, setError] = useState<string | null>(null);
 
@@ -95,10 +95,10 @@ export const CreateRecipePage = () => {
           ? <div>
             <Button component={Link} to='/' variant='text' color='primary' sx={{ marginRight: 4 }}>cancel</Button>
             <Button component={Link} to={recipe.title && '/'} variant='contained' color='primary'
-                    onClick={updateRecipe}>Edit Recipe</Button>
+                    onClick={updateRecipe}>Submit</Button>
           </div>
           : <Button component={Link} to={recipe.title && '/'} variant='contained' color='primary'
-                    onClick={addRecipe}>Add Recipe</Button>
+                    onClick={addRecipe}>Submit</Button>
       }
     </div>
   );
