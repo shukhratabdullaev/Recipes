@@ -9,5 +9,3 @@ webpack.config.babel.js
 server
 src/helpers
 tools
-
-game/libs/SpinePlugin.js

@@ -7,48 +7,52 @@ import TextField from '@mui/material/TextField/TextField';
 import { RecipeType } from '../../api/recipes-api';
 import Textarea from '@mui/joy/Textarea/Textarea';
 
-export const CreateRecipePage = React.memo(() => {
-  const [titleText, setTitleText] = useState('');
-  const [urlText, setUrlText] = useState('');
-  const [descriptionText, setDescription] = useState('');
-  const recipes = useAppSelector(state => state.recipes);
-  const { recipeId } = useParams();
-  let recipe: RecipeType | undefined;
-  if (recipeId) recipe = recipes.find(el => el.id === +recipeId);
-  const dispatch = useAppDispatch();
+type InitialRecipeType = Omit<RecipeType, 'id'>
 
-  useEffect(() => {
-    if (recipe) {
-      const { title, url, description } = recipe;
-      setTitleText(title);
-      setUrlText(url);
-      setDescription(description);
-    }
-  }, []);
-
+export const CreateRecipePage = () => {
+  const [recipe, setRecipe] = useState<InitialRecipeType | RecipeType>({title: '', url: '', description: ''});
   const [error, setError] = useState<string | null>(null);
 
-  const addRecipe = () => {
-    if (titleText !== '') {
-      dispatch(createRecipe(titleText.trim(), urlText.trim(), descriptionText.trim()));
-      setTitleText('');
-      setUrlText('');
-      setDescription('');
-    } else {
-      setError('Title is required');
-    }
-  };
-  const updateRecipe = () => {
+
+  const dispatch = useAppDispatch();
+  const { recipeId } = useParams();
+
+  const recipes = useAppSelector(state => state.recipes);
+
+
+  useEffect(() => {
+    if (!recipeId) return;
+
+    const recipe = recipes.find(el => el.id === +recipeId);
     if (recipe) {
-      if (titleText !== '') {
-        dispatch(editRecipe(recipe.id, titleText.trim(), urlText.trim(), descriptionText.trim()));
-        setTitleText('');
-        setUrlText('');
-        setDescription('');
-      } else {
-        setError('Title is required');
-      }
+      setRecipe(recipe);
     }
+  }, [recipes, recipeId]);
+
+
+  const addRecipe = () => {
+    if (!recipe.title) return setError('Title is required');
+
+    const { title, url, description } = recipe;
+    dispatch(createRecipe(title.trim(), url.trim(), description.trim()));
+  };
+
+  const updateRecipe = () => {
+    if (!recipeId) return;
+    if (!recipe.title) return setError('Title is required');
+
+    const { title, url, description } = recipe;
+
+    dispatch(editRecipe(+recipeId, title.trim(), url.trim(), description.trim()));
+  };
+
+  const changeRecipe = (property: string) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!recipe) return;
+    const updatedRecipe: RecipeType | InitialRecipeType = {
+      ...recipe,
+      [property]: e.currentTarget.value
+    };
+    setRecipe(updatedRecipe);
   };
 
 
@@ -57,11 +61,11 @@ export const CreateRecipePage = React.memo(() => {
       padding: '16px 0',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
+      alignItems: 'center'
 
     }}>
-      <TextField value={titleText}
-                 onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setTitleText(e.currentTarget.value)}
+      <TextField value={recipe.title}
+                 onChange={changeRecipe('title')}
                  label='Title'
                  margin='dense'
                  required
@@ -69,33 +73,33 @@ export const CreateRecipePage = React.memo(() => {
                  error={!!error}
                  helperText={error}
                  variant='outlined'
-
       />
-      <TextField value={urlText}
-                 onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setUrlText(e.currentTarget.value)}
+      <TextField value={recipe.url}
+                 onChange={changeRecipe('url')}
                  label='Image URL'
                  fullWidth
                  variant='outlined'
                  margin='dense'
       />
-      <Textarea value={descriptionText}
+      <Textarea value={recipe.description}
                 name='Outlined'
                 placeholder='Description...'
                 variant='outlined'
                 minRows='2'
                 maxRows='7'
-                onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setDescription(e.currentTarget.value)}
+                onChange={changeRecipe('description')}
                 sx={{ margin: '8px 0 16px', width: '100%', fontWeight: '500' }}
       />
       {
-        recipe
+        recipeId
           ? <div>
             <Button component={Link} to='/' variant='text' color='primary' sx={{ marginRight: 4 }}>cancel</Button>
-            <Button component={Link} to='/' variant='contained' color='primary' disabled={!titleText} onClick={updateRecipe}>Edit Recipe</Button>
+            <Button component={Link} to={recipe.title && '/'} variant='contained' color='primary'
+                    onClick={updateRecipe}>Edit Recipe</Button>
           </div>
-          : <Button component={Link} to='/' variant='contained' color='primary' disabled={!titleText}
+          : <Button component={Link} to={recipe.title && '/'} variant='contained' color='primary'
                     onClick={addRecipe}>Add Recipe</Button>
       }
     </div>
   );
-});
+};
