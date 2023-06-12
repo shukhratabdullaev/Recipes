@@ -33,6 +33,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-use-before-define': ['error'],
     '@typescript-eslint/no-shadow': 'off',
+    'comma-dangle': ['error', 'only-multiline'],
     'object-curly-newline': [
       'error',
       {

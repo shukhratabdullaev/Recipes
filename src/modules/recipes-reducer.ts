@@ -53,7 +53,7 @@ export const fetchRecipes = () => (dispatch: ThunkDispatch) => {
 
 export const deleteRecipe = (recipeId: number) => (dispatch: ThunkDispatch) => {
   recipesAPI.deleteRecipe(recipeId)
-    .then((res) => {
+    .then(() => {
       dispatch(removeRecipe(recipeId));
     });
 };
@@ -67,7 +67,7 @@ export const createRecipe = (title: string, url: string, description: string) =>
 
 export const editRecipe = (id: number, title: string, url: string, description: string) => (dispatch: ThunkDispatch) => {
   recipesAPI.updateRecipe(id, title, url, description)
-    .then(res => {
+    .then(() => {
       dispatch(updateRecipe(id, title, url, description));
     });
 };
