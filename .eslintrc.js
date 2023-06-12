@@ -65,7 +65,6 @@ module.exports = {
     'no-underscore-dangle': 0,
     'import/no-mutable-exports': 0,
     'max-classes-per-file': 0,
-    // 'linebreak-style': 'off',
     'react/function-component-definition': [2, {
       namedComponents: 'arrow-function',
       unnamedComponents: 'arrow-function',
