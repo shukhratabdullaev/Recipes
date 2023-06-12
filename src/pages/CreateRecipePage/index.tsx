@@ -1,4 +1,4 @@
-import { RecipeForm } from '../../components/RecipeForm/RecipeForm';
+import { RecipeForm } from 'components/RecipeForm';
 import React from 'react'
 
 export const CreateRecipePage = () => <RecipeForm />;

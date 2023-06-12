@@ -1,18 +1,20 @@
-import { Dispatch } from 'redux';
-import { recipesAPI, RecipeType } from 'api/recipes-api';
+import { Dispatch } from 'redux'
+import { recipesAPI, RecipeType } from 'api/recipes-api'
 
 
-const initialState: RecipeType[] = [];
+const initialState: RecipeType[] = []
 
 // eslint-disable-next-line @typescript-eslint/default-param-last
 export const recipesReducer = (state: RecipeType[] = initialState, action: ActionsType): RecipeType[] => {
   switch (action.type) {
     case 'SET-RECIPES':
-      return action.recipes;
+      return action.recipes
+    case 'SORT-RECIPES':
+      return state.filter(recipe => recipe.title.toLowerCase().includes(action.sortValue.toLowerCase()))
     case 'REMOVE-RECIPE':
-      return state.filter(recipe => recipe.id !== action.id);
+      return state.filter(recipe => recipe.id !== action.id)
     case 'ADD-RECIPE':
-      return [...state, action.recipe];
+      return [...state, action.recipe]
     case 'UPDATE-RECIPE':
       return state.map(el => {
         if (el.id === action.id) {
@@ -20,69 +22,75 @@ export const recipesReducer = (state: RecipeType[] = initialState, action: Actio
             ...el,
             title: action.title,
             url: action.url,
-            description: action.description
-          };
+            description: action.description,
+          }
         }
-        return el;
-      });
+        return el
+      })
     default:
-      return state;
+      return state
   }
-};
+}
 
 // actions
-export const setRecipes = (recipes: RecipeType[]) => ({ type: 'SET-RECIPES', recipes } as const);
-export const removeRecipe = (id: number) => ({ type: 'REMOVE-RECIPE', id } as const);
-export const addRecipe = (recipe: RecipeType) => ({ type: 'ADD-RECIPE', recipe } as const);
+export const setRecipes = (recipes: RecipeType[]) => ({ type: 'SET-RECIPES', recipes } as const)
+export const sortRecipes = (sortValue: string) => ({ type: 'SORT-RECIPES', sortValue } as const)
+export const removeRecipe = (id: number) => ({ type: 'REMOVE-RECIPE', id } as const)
+export const addRecipe = (recipe: RecipeType) => ({ type: 'ADD-RECIPE', recipe } as const)
 export const updateRecipe = (id: number, title: string, url: string, description: string) => ({
   type: 'UPDATE-RECIPE',
   id,
   title,
   url,
-  description
-} as const);
+  description,
+} as const)
 
 
 // thunks
 export const fetchRecipes = () => (dispatch: ThunkDispatch) => {
   recipesAPI.getRecipes()
     .then((res) => {
-      dispatch(setRecipes(res));
-    });
-};
+      dispatch(setRecipes(res))
+    })
+}
+
+export const getSortValue = (value: string) => (dispatch: ThunkDispatch) => {
+  dispatch(sortRecipes(value))
+}
 
 export const deleteRecipe = (recipeId: number) => (dispatch: ThunkDispatch) => {
   recipesAPI.deleteRecipe(recipeId)
     .then(() => {
-      dispatch(removeRecipe(recipeId));
-    });
-};
+      dispatch(removeRecipe(recipeId))
+    })
+}
 
 export const createRecipe = (title: string, url: string, description: string) => (dispatch: ThunkDispatch) => {
   recipesAPI.createRecipe(title, url, description)
     .then((res) => {
-      dispatch(addRecipe(res));
-    });
-};
+      dispatch(addRecipe(res))
+    })
+}
 
 export const editRecipe = (id: number, title: string, url: string, description: string) => (dispatch: ThunkDispatch) => {
   recipesAPI.updateRecipe(id, title, url, description)
     .then(() => {
-      dispatch(updateRecipe(id, title, url, description));
-    });
-};
+      dispatch(updateRecipe(id, title, url, description))
+    })
+}
 
 // types
 export type SetRecipesType = ReturnType<typeof setRecipes>;
+export type SortRecipes = ReturnType<typeof sortRecipes>;
 export type DeleteRecipeType = ReturnType<typeof removeRecipe>;
 export type AddRecipeType = ReturnType<typeof addRecipe>;
 export type UpdateRecipeType = ReturnType<typeof updateRecipe>;
 
 type ActionsType =
   | SetRecipesType
+  | SortRecipes
   | DeleteRecipeType
   | AddRecipeType
   | UpdateRecipeType
-
 
 type ThunkDispatch = Dispatch<ActionsType>

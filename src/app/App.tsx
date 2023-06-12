@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import Container from '@mui/material/Container/Container';
-import { Route, Routes } from 'react-router-dom';
-import { RecipePage } from 'pages/RecipePage/RecipePage';
-import { useAppDispatch } from 'modules/store';
-import { fetchRecipes } from 'modules/recipes-reducer';
-import { SearchAppBar } from 'utils/SearchAppBar';
-import { MainPage } from 'pages/MainPage/MainPage';
-import { EditRecipePage } from 'pages/EditRecipePage/EditRecipePage';
-import { CreateRecipePage } from 'pages/CreateRecipePage/CreateRecipePage';
+import React, { useEffect } from 'react'
+import Container from '@mui/material/Container/Container'
+import { Route, Routes } from 'react-router-dom'
+import { RecipePage } from 'pages/RecipePage'
+import { useAppDispatch } from 'modules/redux/store'
+import { fetchRecipes } from 'modules/redux/recipes-reducer'
+import { SearchAppBar } from 'utils/SearchAppBar'
+import { MainPage } from 'pages/MainPage'
+import { EditRecipePage } from 'pages/EditRecipePage'
+import { CreateRecipePage } from 'pages/CreateRecipePage'
 
 const App = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchRecipes());
-  }, []);
+    dispatch(fetchRecipes())
+  }, [])
 
   return <div className='App'>
     <SearchAppBar />
@@ -27,8 +27,8 @@ const App = () => {
         <Route path='*' element={<h1>Not Fount 404</h1>} />
       </Routes>
     </Container>
-  </div>;
-};
+  </div>
+}
 
 
-export default App;
+export default App

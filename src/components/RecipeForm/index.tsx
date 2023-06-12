@@ -1,59 +1,56 @@
-import { useAppDispatch, useAppSelector } from 'modules/store';
-import { createRecipe, editRecipe } from 'modules/recipes-reducer';
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import Button from '@mui/material/Button/Button';
-import TextField from '@mui/material/TextField/TextField';
-import { RecipeType } from 'api/recipes-api';
-import Textarea from '@mui/joy/Textarea/Textarea';
+import { useAppDispatch, useAppSelector } from 'modules/redux/store'
+import { createRecipe, editRecipe } from 'modules/redux/recipes-reducer'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import Button from '@mui/material/Button/Button'
+import TextField from '@mui/material/TextField/TextField'
+import { RecipeType } from 'api/recipes-api'
+import Textarea from '@mui/joy/Textarea/Textarea'
 
 type InitialRecipeType = Omit<RecipeType, 'id'>
 
 export const RecipeForm = () => {
-  const [recipe, setRecipe] = useState<InitialRecipeType | RecipeType>({title: '', url: '', description: ''});
-  const [error, setError] = useState<string | null>(null);
+  const [recipe, setRecipe] = useState<InitialRecipeType | RecipeType>({ title: '', url: '', description: '' })
+  const [error, setError] = useState<string | null>(null)
 
+  const dispatch = useAppDispatch()
+  const { recipeId } = useParams()
 
-  const dispatch = useAppDispatch();
-  const { recipeId } = useParams();
-
-  const recipes = useAppSelector(state => state.recipes);
-
+  const recipes = useAppSelector(state => state.recipes)
 
   useEffect(() => {
-    if (!recipeId) return;
+    if (!recipeId) return
 
-    const recipe = recipes.find(el => el.id === +recipeId);
+    const recipe = recipes.find(el => el.id === +recipeId)
     if (recipe) {
-      setRecipe(recipe);
+      setRecipe(recipe)
     }
-  }, [recipes, recipeId]);
+  }, [recipes, recipeId])
 
 
   const addRecipe = () => {
-    if (!recipe.title) return setError('Title is required');
+    if (!recipe.title) return setError('Title is required')
 
-    const { title, url, description } = recipe;
-    dispatch(createRecipe(title.trim(), url.trim(), description.trim()));
-  };
+    const { title, url, description } = recipe
+    dispatch(createRecipe(title.trim(), url.trim(), description.trim()))
+  }
 
   const updateRecipe = () => {
-    if (!recipeId) return;
-    if (!recipe.title) return setError('Title is required');
+    if (!recipeId) return
+    if (!recipe.title) return setError('Title is required')
 
-    const { title, url, description } = recipe;
-
-    dispatch(editRecipe(+recipeId, title.trim(), url.trim(), description.trim()));
-  };
+    const { title, url, description } = recipe
+    dispatch(editRecipe(+recipeId, title.trim(), url.trim(), description.trim()))
+  }
 
   const changeRecipe = (property: string) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (!recipe) return;
+    if (!recipe) return
     const updatedRecipe: RecipeType | InitialRecipeType = {
       ...recipe,
-      [property]: e.currentTarget.value
-    };
-    setRecipe(updatedRecipe);
-  };
+      [property]: e.currentTarget.value,
+    }
+    setRecipe(updatedRecipe)
+  }
 
 
   return (
@@ -61,7 +58,7 @@ export const RecipeForm = () => {
       padding: '16px 0',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
+      alignItems: 'center',
 
     }}>
       <TextField value={recipe.title}
@@ -88,7 +85,7 @@ export const RecipeForm = () => {
                 minRows='2'
                 maxRows='7'
                 onChange={changeRecipe('description')}
-                sx={{ margin: '8px 0 16px', width: '100%', fontWeight: '500' }}
+                sx={{ margin: '8px 0 16px', width: '100%', fontWeight: '400', backgroundColor: 'inherit' }}
       />
       {
         recipeId
@@ -101,5 +98,5 @@ export const RecipeForm = () => {
                     onClick={addRecipe}>Submit</Button>
       }
     </div>
-  );
-};
+  )
+}
